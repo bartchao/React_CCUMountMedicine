@@ -1,0 +1,39 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import { lazy } from 'react';
+import { Outlet } from 'react-router-dom';
+// project import
+import Loadable from '@components/LayoutComponents/Loadable';
+import getErrorMessage from '@pages/error-page/ErrorMessage';
+
+const ErrorPage = Loadable(lazy(() => import('@pages/error-page/ErrorPage')));
+
+// ==============================|| ERROR ROUTING ||============================== //
+
+const ErrorRoutes = {
+  path: '/',
+  element: (
+
+      <Outlet />
+
+  ),
+  children: [
+    {
+      path: '404',
+      element: <ErrorPage {...getErrorMessage(404)} />,
+    },
+    {
+      path: '403',
+      element: <ErrorPage {...getErrorMessage(403)} />,
+    },
+    {
+      path: '500',
+      element: <ErrorPage {...getErrorMessage(500)} />,
+    },
+    {
+      path: '*',
+      element: <ErrorPage {...getErrorMessage(404)} />,
+    },
+  ],
+};
+
+export default ErrorRoutes;

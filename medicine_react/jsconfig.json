@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "baseUrl": "./",
+        "paths": {
+            "@components/*": [
+                "src/components/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

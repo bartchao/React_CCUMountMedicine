@@ -1,0 +1,32 @@
+import { Outlet } from 'react-router';
+
+// material-ui
+import { Box, Toolbar } from '@mui/material';
+
+// project import
+import { DeltaAppBar, Localization } from 'components/LayoutComponents/Header/';
+import Footer from 'components/LayoutComponents/Footer';
+
+// ==============================|| LOGIN LAYOUT ||============================== //
+
+function LoginLayout() {
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        width: '100%',
+        flexDirection: 'column',
+        minHeight: '100vh',
+      }}
+    >
+      <DeltaAppBar>
+        <Localization />
+      </DeltaAppBar>
+      <Toolbar />
+      <Outlet />
+      <Footer />
+    </Box>
+  );
+}
+
+export default LoginLayout;

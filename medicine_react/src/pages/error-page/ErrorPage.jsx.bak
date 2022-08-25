@@ -1,0 +1,64 @@
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+
+// Material components
+import { Box, Typography, Grid, Stack, Button } from '@mui/material';
+// Icons
+import { WarningOutlined, CaretLeftOutlined } from '@ant-design/icons';
+import DeltaLogo from '@components/LayoutComponents/Logo/DeltaLogo';
+
+const styles = {
+  verticalCenter: {
+    display: 'flex',
+    flexGrow: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'primary.main',
+    color: 'primary.contrastText',
+  },
+};
+function ErrorPage(props) {
+  const { title, subtitle, body } = props;
+  const navigate = useNavigate();
+  return (
+    <Box sx={styles.verticalCenter}>
+      <Stack direction="row" alignItems="center" sx={{ flexGrow: 1 }}>
+        <Grid container justifyContent="center" alignItems="center" sx={{ minWidth: '800px' }}>
+          <Grid container xs={4}>
+            <Typography variant="h1" align="center">
+              <WarningOutlined />
+              {title}
+            </Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <Typography variant="h2">{subtitle}</Typography>
+            <Typography variant="body">{body}</Typography>
+          </Grid>
+          <Grid container justifyContent="center" sx={{ mt: 3 }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ width: '20%' }}
+              startIcon={<CaretLeftOutlined onClick={() => navigate(-1)} />}
+            >
+              Back
+            </Button>
+          </Grid>
+        </Grid>
+      </Stack>
+
+      <Stack sx={{ mb: 2 }}>
+        <DeltaLogo color="white" />
+      </Stack>
+    </Box>
+  );
+}
+
+export default ErrorPage;
+
+ErrorPage.propTypes = {
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  body: PropTypes.string,
+};

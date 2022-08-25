@@ -1,0 +1,15 @@
+import { Outlet } from 'react-router-dom';
+import navigation from 'routes/menu-items';
+import Breadcrumbs from '@components/LayoutComponents/Breadcrumbs';
+import MainLayout from '@layout/MainLayout/';
+// ==============================|| PAGE LAYOUT ||============================== //
+
+function BreadcrumbLayout() {
+  return (
+    <MainLayout>
+      <Breadcrumbs sx={{ marginRight: 3 }} navigation={navigation} card={false} divider={false} />
+      <Outlet />
+    </MainLayout>
+  );
+}
+export default BreadcrumbLayout;
