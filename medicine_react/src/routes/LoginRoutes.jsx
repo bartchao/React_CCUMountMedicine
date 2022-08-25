@@ -2,21 +2,20 @@ import { lazy } from 'react';
 import { Outlet } from 'react-router-dom';
 // project import
 import Loadable from '@components/LayoutComponents/Loadable';
-import MainLayout from 'src/layout/MainLayout/index';
 // import BreadcrumbLayout from '@layout/BreadcrumbLayout/';
-const CalculatePage = Loadable(lazy(() => import('@pages/Calculate')));
+const LandingPage = Loadable(lazy(() => import('@pages/Landing')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
-const MainRoutes = {
+const LoginRoutes = {
   path: '/',
-  element: (<MainLayout><Outlet/></MainLayout>
+  element: (<Outlet/>
   ),
   children: [
-    {
-      path: '/calc',
-      element: <CalculatePage />,
-      breadcrumb: 'navigation.calc',
+     {
+      path: '',
+      element: <LandingPage />,
+      breadcrumb: 'navigation.landing',
     },/*
     {
       path: 'dashboard',
@@ -36,4 +35,4 @@ const MainRoutes = {
   ],
 };
 
-export default MainRoutes;
+export default LoginRoutes;
