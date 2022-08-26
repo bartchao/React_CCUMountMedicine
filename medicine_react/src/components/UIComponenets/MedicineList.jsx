@@ -1,23 +1,13 @@
 import { useState } from 'react';
 import {
-  Avatar,
   Box,
-  IconButton,
   Grid,
   Card,
   CardContent,
   Typography,
-  CardActions,
+    CardActions,
+  Button,Modal
 } from '@mui/material';
-import { Delete } from '@mui/icons-material/';
-
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Modal from '@mui/material/Modal';
 import MedicineItem from './Medicine';
 
 const style = {
@@ -31,8 +21,6 @@ const style = {
 };
 
 export default function MedicineList() {
-  const theme = useTheme();
-  const matchesSm = useMediaQuery(theme.breakpoints.up('sm'));
   const [open, setOpen] = useState(false);
     const handleOpen = (data) => {
         alert(data);

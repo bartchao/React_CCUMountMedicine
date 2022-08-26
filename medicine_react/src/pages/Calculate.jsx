@@ -30,7 +30,7 @@ export default function CalculatePage() {
     };
     return (
         <Container component="main" maxWidth="xl">
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
                 <Grid item md={3} xs={12}>
                     <TeamInfo />
                 </Grid>
@@ -41,6 +41,7 @@ export default function CalculatePage() {
                             <Tab label="高山用藥物"  />
                             <Tab label="口服藥物"  />
                             <Tab label="外用藥物/器材" />
+                            <Tab icon={<AddIcon />} iconPosition="start" label="新增種類" />    
                         </Tabs>
                         </Box>
                         <TabPanel value={value} index={0}>
@@ -56,6 +57,11 @@ export default function CalculatePage() {
                 </Grid>
             </Grid>
             <div style={{position: 'fixed',bottom: 20,right: 20}}>
+                <Fab size="medium" color="secondary" aria-label="add">
+                <AddIcon />
+                </Fab>
+            </div>
+            <div style={{position: 'fixed',bottom: 80,right: 20}}>
                 <Fab size="medium" color="secondary" aria-label="add">
                 <AddIcon />
                 </Fab>
