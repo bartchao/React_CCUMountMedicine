@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-  Avatar,
   Box,
   ListItem,
   ListItemButton,
@@ -9,39 +8,55 @@ import {
   Grid,
   Typography,
   Paper,
-  Dialog,
-  DialogTitle,
-  List,
-  ListItemAvatar,
-    Stack,
-  TextField
+  Card,
+  CardContent,
+  CardActions,
+  Modal,
 } from '@mui/material';
 import { Delete } from '@mui/icons-material/';
-
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Input from '@mui/material/Input';
-import { Toolbar } from '@mui/material';
-export default function MedicineItem({ data, handleOpen }) {
+import CountDialog from './MobileCountDialog';
+const ModalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+};
+export default function MedicineItem({ data }) {
+  const { title, subtitle, text, count } = data;
   const theme = useTheme();
   const matchesTouch = useMediaQuery(theme.breakpoints.up('md'));
   const [style, setStyle] = useState({ visibility: 'hidden' });
 
-  const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState();
-
-  const handleClickOpen = () => {
-    setOpen(true);
+  const [countDialogOpen, setCountDialogOpen] = useState(false);
+  const [infoModalOpen, setInfoModalOpen] = useState(false);
+  const [newCount, setNewCount] = useState(count);
+  const handleCountDialogOpen = () => {
+    setCountDialogOpen(true);
   };
 
-  const handleClose = (value) => {
-    setOpen(false);
-    setSelectedValue(value);
+  const handleCountDialogClose = () => {
+    setCountDialogOpen(false);
   };
-  let count = 24;
+  const handleInfoModalOpen = () => {
+    setInfoModalOpen(true);
+  };
+  const handleInfoModalClose = () => {
+    setInfoModalOpen(false);
+  };
+  const handleCountChange = (value) => {
+    setNewCount(value);
+  };
+  const handleReset = () => {
+    setNewCount(count);
+  };
   return (
     <>
       <Grid item lg={6} xs={12}>
@@ -62,67 +77,66 @@ export default function MedicineItem({ data, handleOpen }) {
                       <IconButton>
                         <Delete />
                       </IconButton>
-                      <IconButton>
+                      <IconButton
+                        onClick={() => handleCountChange(newCount - 1)}
+                      >
                         <RemoveIcon />
                       </IconButton>
-                      <IconButton>
+                      <IconButton
+                        onClick={() => handleCountChange(newCount + 1)}
+                      >
                         <AddIcon />
                       </IconButton>
                     </Box>
-                    <Button>
-                      <Typography variant="h6">{count}</Typography>
+                    <Button onClick={handleCountDialogOpen}>
+                      <Typography variant="h6">{newCount}</Typography>
                     </Button>
                   </>
                 )}
                 {!matchesTouch && (
-                  <Button variant="contained" onClick={handleClickOpen}>
-                    <Typography variant="h6">{count}</Typography>
+                  <Button variant="contained" onClick={handleCountDialogOpen}>
+                    <Typography variant="h6">{newCount}</Typography>
                   </Button>
                 )}
               </Box>
             }
           >
-            <ListItemButton >
-              <ListItemText primary="Inbox" secondary="TEST" />
+            <ListItemButton onClick={handleInfoModalOpen}>
+              <ListItemText primary={title} secondary={subtitle} />
             </ListItemButton>
           </ListItem>
         </Paper>
-        <SimpleDialog
-          selectedValue={selectedValue}
-          open={open}
-          onClose={handleClose}
+        <CountDialog
+          count={newCount}
+          open={countDialogOpen}
+          onClose={handleCountDialogClose}
+          onCountChange={handleCountChange}
+          handleReset={handleReset}
         />
       </Grid>
+      <Modal
+        open={infoModalOpen}
+        onClose={handleInfoModalClose}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <Box sx={{ ...ModalStyle }}>
+          <Card sx={{ minWidth: 400 }}>
+            <CardContent>
+              <Typography variant="h5" color="text.primary" gutterBottom>
+                {title}
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                {subtitle}
+              </Typography>
+              <Typography variant="body2">{text}</Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small">Learn More</Button>
+            </CardActions>
+          </Card>
+        </Box>
+      </Modal>
     </>
-  );
-}
-
-function SimpleDialog(props) {
-  const { onClose, selectedValue, open } = props;
-    let count = 24;
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
-
-  const handleListItemClick = (value) => {
-    onClose(value);
-  };
-
-  return (
-      <Dialog onClose={handleClose} open={open} >
-          <Box p={1}>
-      <DialogTitle>設定數量</DialogTitle>
-          <Stack direction="row" spacing={1}>
-              <IconButton>
-        <RemoveIcon />
-              </IconButton>
-              <Input size="small" value={count} label="數量" sx={{ width: 80 }}  inputProps={{min: 0, style: { textAlign: 'center' }}}></Input>
-      <IconButton>
-        <AddIcon />
-              </IconButton>
-          </Stack>
-    <Toolbar/>
-          </Box>
-    </Dialog>
   );
 }

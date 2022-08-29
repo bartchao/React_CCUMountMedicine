@@ -1,16 +1,11 @@
 import { useState } from 'react';
 import {
-  Box,
   Grid,
-  Card,
-  CardContent,
-  Typography,
-    CardActions,
-  Button,Modal
+
 } from '@mui/material';
 import MedicineItem from './Medicine';
 
-const style = {
+const ModalStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -19,11 +14,17 @@ const style = {
   bgcolor: 'background.paper',
   boxShadow: 24,
 };
-
-export default function MedicineList() {
-  const [open, setOpen] = useState(false);
-    const handleOpen = (data) => {
-        alert(data);
+const testData = {
+    title: 'Diamox',
+    subtitle: 'TEst',
+    body: 'Hello world',
+    count: 24,
+}
+export default function MedicineList({ data }) {
+    
+    const [open, setOpen] = useState(false);
+  const handleOpen = (data) => {
+    alert(data);
     setOpen(true);
   };
   const handleClose = () => {
@@ -32,36 +33,9 @@ export default function MedicineList() {
 
   return (
     <Grid container spacing={2}>
-      {[...Array(10)].map((el,index) => (
-          <MedicineItem key={index} data={index} handleOpen={handleOpen}/>
+      {data.item.map((el, index) => (
+        <MedicineItem key={index} data={el} handleOpen={handleOpen} />
       ))}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <Box sx={{ ...style }}>
-          <Card sx={{ minWidth: 400 }}>
-            <CardContent>
-              <Typography variant="h5" color="text.primary" gutterBottom>
-                Diamox
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                adjective
-              </Typography>
-              <Typography variant="body2">
-                well meaning and kindly.
-                <br />
-                {'"a benevolent smile"'}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
-        </Box>
-      </Modal>
     </Grid>
   );
 }

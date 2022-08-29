@@ -1,0 +1,220 @@
+{
+  "medicine": [
+    {
+      "category": "高山症用藥",
+      "attitude":2500,
+      "item": [
+        {
+          "title": "丹木斯",
+          "subtitle": "Acetazolamide 250mg",
+          "text": "高山症 (預防：125mg/12hr，治療輕度AMS每12小時1~2顆(250~500mg/12hr)",
+          "count": "((days+0.5)*person)"
+        },
+        {
+          "title": "鈣離子阻斷劑",
+          "subtitle": "Nifedipine OROS 30mg",
+          "text": "高山肺水腫：每12小時1顆(30mg/12hr)",
+          "count": "days*(person/8)*2"
+        },
+        {
+          "title": "高山症用類固醇",
+          "subtitle": "Dexamethasone 0.5mg/tab",
+          "text": "預防高山症用藥(無法服用丹木斯) 4mg/12小時 (1人整趟行程量)",
+          "count": "(days+0.5)*8*(person/8)"
+        },
+        {
+          "title": "高山症用類固醇",
+          "subtitle": "Dexamethasone 0.5mg/tab",
+          "text": "治療高山症/高海拔腦水腫（1/8總人數）第一次8mg 之後4mg/6hr     ",
+          "count": "(((days-0.5)*8*4)+16)*(person/8)"
+        }
+      ]
+    },
+    {
+      "category": "內用藥",
+      "attitude":-1,
+      "item": [
+        {
+          "title": "暈車藥",
+          "subtitle": "Meclizine Hydrochloride 25mg",
+          "text": "車前30分鐘 每次1~2顆",
+          "count": "2*person"
+        },
+        {
+          "title": "止痛藥",
+          "subtitle": "Acetaminophen 500mg",
+          "text": "退燒止痛 每4~6小時1顆(500mg/6hr)",
+          "count": "days*(person/4)*3"
+        },
+        {
+          "title": "感冒藥",
+          "subtitle": "含維生素B1 B2",
+          "text": "一日3次",
+          "count": "days*(person/8)*3"
+        },
+        {
+          "title": "胃藥",
+          "subtitle": "Magnesium hydroxide 200mg",
+          "text": "一日3次",
+          "count": "days*(person/8)*3"
+        },
+        {
+          "title": "止瀉劑",
+          "subtitle": "Loperamide hydrochloride 2mg",
+          "text": "一日2次 整粒吞服不可咬啐",
+          "count": "days*(person/8)*2"
+        },
+        {
+          "title": "抗組織胺",
+          "subtitle": "Certirizine  Dihydrochloride 10mg",
+          "text": "每天2顆(20mg/24hr)  副作用(嗜睡、全身無力)半顆",
+          "count": "days*(person/8)*2"
+        },
+        {
+          "title": "類固醇",
+          "subtitle": "Predinisolone 5mg",
+          "text": "腎上腺皮質功能不全、高血鈣、類風濕性關節炎、皮膚炎、眼睛發炎、哮喘 每日3-4次",
+          "count": "days*(person/8)*3"
+        }
+      ]
+    },
+    {
+      "category": "外用藥",
+      "attitude":-1,
+      "item": [
+        {
+          "title": "抗生素軟膏",
+          "subtitle": "Neomycin",
+          "text": "治療細菌感染(有感染才抹)",
+          "count": "1"
+        },
+        {
+          "title": "眼藥膏",
+          "subtitle": "Neomycin Sulfate",
+          "text": "預防、治療細菌感染",
+          "count": "1"
+        },
+        {
+          "title": "抗組織胺軟膏",
+          "subtitle": "",
+          "text": "皮膚搔癢、蕁麻疹、蚊蟲叮咬",
+          "count": "1"
+        },
+        {
+          "title": "肌肉消炎劑",
+          "subtitle": "",
+          "text": "緩解肌肉發炎 (扭傷、骨折)",
+          "count": "1"
+        },
+        {
+          "title": "生理食鹽水",
+          "subtitle": "",
+          "text": "清洗傷口、沖洗眼睛",
+          "count": "(person/8*6)+((days-2)*3)"
+        }
+      ]
+    },
+    {
+      "category": "外用醫療器材",
+      "attitude":-1,
+      "item": [
+        {
+          "title": "硬蜱拔除器",
+          "subtitle": "",
+          "text": "",
+          "count": "1"
+        },
+        {
+          "title": "2*2紗布/包",
+          "subtitle": "",
+          "text": "",
+          "count": "days*person/8"
+        },
+        {
+          "title": "3*3紗布/包",
+          "subtitle": "",
+          "text": "",
+          "count": "days*person/8"
+        },
+        {
+          "title": "4*4紗布/包",
+          "subtitle": "",
+          "text": "",
+          "count": "days*person/8"
+        },
+        {
+          "title": "彈性繃帶",
+          "subtitle": "",
+          "text": "",
+          "count": "1"
+        },
+        {
+          "title": "大OK繃",
+          "subtitle": "",
+          "text": "",
+          "count": "days/2*person/2"
+        },
+        {
+          "title": "小OK繃",
+          "subtitle": "",
+          "text": "",
+          "count": "days/2*person/2"
+        },
+        {
+          "title": "防水大OK繃",
+          "subtitle": "",
+          "text": "",
+          "count": "days/2*person/4"
+        },
+        {
+          "title": "防水小OK繃",
+          "subtitle": "",
+          "text": "",
+          "count": "days/2*person/4"
+        },
+        {
+          "title": "透氣膠帶",
+          "subtitle": "",
+          "text": "",
+          "count": "person/8*days/2"
+        },
+        {
+          "title": "人工皮",
+          "subtitle": "",
+          "text": "",
+          "count": "1"
+        },
+        {
+          "title": "酒精棉片",
+          "subtitle": "",
+          "text": "",
+          "count": "(person/8*6)+((days-2)*3)"
+        },
+        {
+          "title": "棉棒（10入/包）",
+          "subtitle": "",
+          "text": "",
+          "count": "person/8*days/2"
+        },
+        {
+          "title": "針筒",
+          "subtitle": "",
+          "text": "",
+          "count": "1"
+        },
+        {
+          "title": "鑷子",
+          "subtitle": "",
+          "text": "",
+          "count": "1"
+        },
+        {
+          "title": "剪刀",
+          "subtitle": "",
+          "text": "",
+          "count": "1"
+        }
+      ]
+    }
+  ]
+}
