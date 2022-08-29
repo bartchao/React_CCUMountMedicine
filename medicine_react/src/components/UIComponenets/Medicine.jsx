@@ -20,6 +20,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CountDialog from './MobileCountDialog';
+import useReset from 'src/hook/useReset';
 const ModalStyle = {
   position: 'absolute',
   top: '50%',
@@ -29,8 +30,8 @@ const ModalStyle = {
   bgcolor: 'background.paper',
   boxShadow: 24,
 };
-export default function MedicineItem({ data }) {
-  const { title, subtitle, text, count } = data;
+export default function MedicineItem({ index,data,handleDelete }) {
+  const { title, subtitle, text, formula, count,uuid } = data;
   const theme = useTheme();
   const matchesTouch = useMediaQuery(theme.breakpoints.up('md'));
   const [style, setStyle] = useState({ visibility: 'hidden' });
@@ -38,6 +39,7 @@ export default function MedicineItem({ data }) {
   const [countDialogOpen, setCountDialogOpen] = useState(false);
   const [infoModalOpen, setInfoModalOpen] = useState(false);
   const [newCount, setNewCount] = useState(count);
+  const defaultValue = useReset(formula);
   const handleCountDialogOpen = () => {
     setCountDialogOpen(true);
   };
@@ -55,7 +57,7 @@ export default function MedicineItem({ data }) {
     setNewCount(value);
   };
   const handleReset = () => {
-    setNewCount(count);
+    setNewCount(defaultValue);
   };
   return (
     <>
@@ -74,7 +76,7 @@ export default function MedicineItem({ data }) {
                 {matchesTouch && (
                   <>
                     <Box sx={style}>
-                      <IconButton>
+                      <IconButton onClick={()=>handleDelete(uuid)}>
                         <Delete />
                       </IconButton>
                       <IconButton
@@ -123,13 +125,14 @@ export default function MedicineItem({ data }) {
         <Box sx={{ ...ModalStyle }}>
           <Card sx={{ minWidth: 400 }}>
             <CardContent>
-              <Typography variant="h5" color="text.primary" gutterBottom>
+              <Typography variant="h5" color="text.primary" >
                 {title}
               </Typography>
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
                 {subtitle}
               </Typography>
-              <Typography variant="body2">{text}</Typography>
+              <Typography variant="body1" gutterBottom>{text}</Typography>
+              <Typography variant="overline">公式:{formula.replace('days', '天數').replace('person', '人數')}</Typography>
             </CardContent>
             <CardActions>
               <Button size="small">Learn More</Button>

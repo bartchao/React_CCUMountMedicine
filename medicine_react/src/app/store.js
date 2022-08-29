@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import infoReducer from '@store/info/infoSlice';
+import medicineSlice from 'src/store/modules/medicine/medicineSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    teamInfo: infoReducer,
+    medicineList:medicineSlice
   },
 });

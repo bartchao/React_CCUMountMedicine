@@ -16,6 +16,7 @@ module.exports = function override(config) {
     '@layout': resolve('src/layout'),
     '@pages': resolve('src/pages'),
     '@apis': resolve('src/apis'),
+    '@store':resolve('src/store/modules')
   };
   return config;
 }

@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 // project import
 import Loadable from '@components/LayoutComponents/Loadable';
 import MainLayout from 'src/layout/MainLayout/index';
+import LandingPage from 'src/pages/Landing';
 // import BreadcrumbLayout from '@layout/BreadcrumbLayout/';
 const CalculatePage = Loadable(lazy(() => import('@pages/Calculate')));
 
@@ -17,7 +18,12 @@ const MainRoutes = {
       path: '/calc',
       element: <CalculatePage />,
       breadcrumb: 'navigation.calc',
-    },/*
+    },
+    {
+      path: '',
+      element: <LandingPage />
+      
+    }/*
     {
       path: 'dashboard',
       element: <DashboardDefault />,

@@ -12,7 +12,8 @@ import {
 import TeamInfo from '@components/UIComponenets/TeamInfo';
 import MedicineList from '@components/UIComponenets/MedicineList';
 import AddIcon from '@mui/icons-material/Add';
-import medicine from 'src/common/medicine.json';
+import { useSelector,useDispatch } from 'react-redux';
+import { medicineList } from 'src/store/modules/medicine/medicineSlice';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -34,6 +35,8 @@ function TabPanel(props) {
 }
 export default function CalculatePage() {
   const [value, setValue] = useState(0);
+  const dispatch = useDispatch();
+  const medicine = useSelector(medicineList);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -52,16 +55,16 @@ export default function CalculatePage() {
                 variant="scrollable"
                 scrollButtons="auto"
               >
-                {medicine.medicine.map((category, index) => (
+                {medicine.map((category, index) => (
                   <Tab label={category.category} value={index} />
                 ))}
                 <Tab icon={<AddIcon />} iconPosition="start" label="新增種類" />
               </Tabs>
             </Box>
-                      {medicine.medicine.map((category, index) => (
+                      {medicine.map((category, index) => (
                           <TabPanel value={value} index={index}>
-                              <MedicineList data={category} />
-                          </TabPanel>))};
+                          <MedicineList data={category} index={index} />
+                          </TabPanel>))}
           </Paper>
         </Grid>
       </Grid>

@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import {
-  Grid,
-
+  Grid
 } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { deleteItem } from 'src/store/modules/medicine/medicineSlice';
 import MedicineItem from './Medicine';
-
 const ModalStyle = {
   position: 'absolute',
   top: '50%',
@@ -14,28 +13,21 @@ const ModalStyle = {
   bgcolor: 'background.paper',
   boxShadow: 24,
 };
-const testData = {
-    title: 'Diamox',
-    subtitle: 'TEst',
-    body: 'Hello world',
-    count: 24,
-}
-export default function MedicineList({ data }) {
-    
-    const [open, setOpen] = useState(false);
-  const handleOpen = (data) => {
-    alert(data);
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
+export default function MedicineList({ data, index }) {
+  const dispatch = useDispatch();
+  const handleDelete = (uuid) => {
+    let item = {
+      index: index,
+      uuid:uuid
+    }
+    dispatch(deleteItem(item));
+  }
   return (
     <Grid container spacing={2}>
       {data.item.map((el, index) => (
-        <MedicineItem key={index} data={el} handleOpen={handleOpen} />
+        <MedicineItem key={index} index={index} data={el} handleDelete={handleDelete}  />
       ))}
     </Grid>
-  );
+  )
 }

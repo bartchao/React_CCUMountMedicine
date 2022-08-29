@@ -1,7 +1,27 @@
 import { CssBaseline,Typography,Container, Box, Grid, TextField,FormControlLabel,Button,Checkbox,Link } from '@mui/material';
-
+import { useRef} from 'react';
+import { useDispatch } from 'react-redux';
+import { setTeamData } from '@store/info/infoSlice';
+import { useNavigate } from 'react-router-dom';
 function LandingPage() {    
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const teamNameRef = useRef();
+  const teamPersonRef = useRef();
+  const teamDaysRef = useRef();
+  const teamAttitudeRef = useRef();
+  const handleSubmit = () => {
+    let teamName = teamNameRef.current.value;
+    let teamPerson = teamPersonRef.current.value;
+    let teamDays = teamDaysRef.current.value;
+    let teamAttitude = teamAttitudeRef.current.value;
+    let payload = { teamName, teamPerson, teamDays, teamAttitude };
+    console.log(payload)
+    dispatch(setTeamData(payload));
+    navigate('/calc');
+  }
   return (
+    
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
@@ -27,6 +47,7 @@ function LandingPage() {
                 id="teamNameInput"
                 label="隊伍名稱"
                 autoFocus
+                inputRef={teamNameRef}
               />
             </Grid>
             <Grid item xs={12}>
@@ -38,7 +59,8 @@ function LandingPage() {
                 type="number"
                 id="teamAttInput"
                 inputProps={{ min: 1, step: 500 }}
-                
+                inputRef={teamAttitudeRef}
+
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -51,6 +73,7 @@ function LandingPage() {
                 min="1"
                 name="teamDaysInput"
                 inputProps={{ min: 1 }}
+                inputRef={teamDaysRef}
                 
               />
             </Grid>
@@ -64,21 +87,16 @@ function LandingPage() {
                 autoComplete="team-person"
                 type="number"
                 inputProps={{ min: 1 }}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                inputRef={teamPersonRef}
+                
               />
             </Grid>
           </Grid>
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={handleSubmit}
           >
             下一步
           </Button>
