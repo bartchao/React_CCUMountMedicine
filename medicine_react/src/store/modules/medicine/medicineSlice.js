@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice,current } from '@reduxjs/toolkit';
 import DefaultPreset from 'src/common/medicine.json';
 import { v4 as uuidv4 } from 'uuid';
 const initialState = {
@@ -18,17 +18,37 @@ export const infoSlice = createSlice({
       state.medicineList[index].item = payload;
     },
     addMedicineItemInCategory: (state, action) => {
-        let { target, ...payload } = action.payload;
-        let { formula, count } = payload;
-        if (count === undefined && formula !== undefined) {
-            count = Calculate()
+      let { target, ...payload } = action.payload;
+      state.medicineList[target].item = [
+        ...state.medicineList[target].item,
+        payload,
+      ];
+    },
+    modifyMedicineItemInCategory: (state, action) => {
+      let { uuid, value } = action.payload;
+      let medicineList = state.medicineList;
+      for (const category in medicineList) {
+        let targetItem = medicineList[category].item.filter(
+          (item) => item.uuid === uuid
+        );
+        if (targetItem !== undefined) {
+          let obj = targetItem[0];
+          obj.count = value;
+          //console.log(current(medicineList));
+          break;
         }
-        state.medicineList[target].item = [...state.medicineList[target].item, payload];
+
+      }
     },
   },
 });
 
-export const { setMedicineList, deleteMedicineItem,addMedicineItemInCategory } = infoSlice.actions;
+export const {
+  setMedicineList,
+  deleteMedicineItem,
+  addMedicineItemInCategory,
+  modifyMedicineItemInCategory,
+} = infoSlice.actions;
 export const medicineList = (state) => state.medicineList.medicineList;
 
 export default infoSlice.reducer;
@@ -44,8 +64,8 @@ function CalculateAll(days, person) {
   });
   return medicine;
 }
-function Calculate(days,person,formula) {
-    return Number(eval(formula));
+function Calculate(days, person, formula) {
+  return Number(eval(formula));
 }
 export const deleteItem = (payload) => (dispatch, getState) => {
   let medicineList = Object.assign({}, getState().medicineList.medicineList);
@@ -60,13 +80,16 @@ export const deleteItem = (payload) => (dispatch, getState) => {
 };
 
 export const addMedicineItem = (payload) => (dispatch, getState) => {
-    let { target, ...formData } = payload;
-    let { teamDays, teamPerson } = getState().teamInfo;
-    let { count, formula } = formData;
-    if (count === '' && formula !== '') {
-        count = Calculate(teamDays, teamPerson, formula);
-        payload = { ...payload, count };
-     //   console.log(payload);
-    }
-    dispatch(addMedicineItemInCategory(payload));
-}
+  let { target, ...formData } = payload;
+  let { teamDays, teamPerson } = getState().teamInfo;
+  let { count, formula } = formData;
+  if (count === '' && formula !== '') {
+    count = Calculate(teamDays, teamPerson, formula);
+    payload = { ...payload, count };
+    //   console.log(payload);
+  }
+  let uuid = uuidv4();
+  payload = { ...payload, uuid };
+  dispatch(addMedicineItemInCategory(payload));
+};
+

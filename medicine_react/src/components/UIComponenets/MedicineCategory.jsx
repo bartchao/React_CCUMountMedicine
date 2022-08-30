@@ -1,3 +1,4 @@
+
 import {
   Grid
 } from '@mui/material';
@@ -13,6 +14,7 @@ export default function MedicineCategory({ data, index }) {
     }
     dispatch(deleteItem(item));
   }
+  
   return (
     <Grid container spacing={2}>
       {data.item.map((el, index) => (

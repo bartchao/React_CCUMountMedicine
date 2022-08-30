@@ -21,6 +21,8 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CountDialog from './MobileCountDialog';
 import useReset from 'src/hook/useReset';
+import { useDispatch } from 'react-redux';
+import { modifyMedicineItemInCategory } from 'src/store/modules/medicine/medicineSlice';
 const ModalStyle = {
   position: 'absolute',
   top: '50%',
@@ -30,9 +32,10 @@ const ModalStyle = {
   bgcolor: 'background.paper',
   boxShadow: 24,
 };
-export default function MedicineItem({ index,data,handleDelete }) {
+export default function MedicineItem({ data,handleDelete }) {
   const { title, subtitle, text, formula, count,uuid } = data;
   const theme = useTheme();
+  const dispatch = useDispatch();
   const matchesTouch = useMediaQuery(theme.breakpoints.up('md'));
   const [style, setStyle] = useState({ visibility: 'hidden' });
 
@@ -54,11 +57,12 @@ export default function MedicineItem({ index,data,handleDelete }) {
     setInfoModalOpen(false);
   };
   const handleCountChange = (value) => {
-    setNewCount(value);
+    if (value >= 0) {
+      setNewCount(value);
+      dispatch(modifyMedicineItemInCategory({ uuid, value }));
+    }
   };
-  const handleReset = () => {
-    setNewCount(defaultValue);
-  };
+
   return (
     <>
       <Grid item lg={6} xs={12}>
@@ -113,7 +117,7 @@ export default function MedicineItem({ index,data,handleDelete }) {
           open={countDialogOpen}
           onClose={handleCountDialogClose}
           onCountChange={handleCountChange}
-          handleReset={handleReset}
+          handleReset={()=> handleCountChange(defaultValue)}
         />
       </Grid>
       <Modal

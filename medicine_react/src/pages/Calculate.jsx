@@ -36,7 +36,7 @@ function TabPanel(props) {
 export default function CalculatePage() {
   const [value, setValue] = useState(0);
   const medicine = useSelector(medicineList);
-  const handleChange = (event, newValue) => {
+  const handleChange = (newValue) => {
     setValue(newValue);
   };
   return (
