@@ -7,13 +7,13 @@ import {
   Tabs,
   Typography,
   Paper,
-  Fab,
 } from '@mui/material/';
 import TeamInfo from '@components/UIComponenets/TeamInfo';
 import MedicineList from '@components/UIComponenets/MedicineList';
-import AddIcon from '@mui/icons-material/Add';
-import { useSelector,useDispatch } from 'react-redux';
+
+import { useSelector } from 'react-redux';
 import { medicineList } from 'src/store/modules/medicine/medicineSlice';
+import AddMedicineItem from '@components/UIComponenets/AddMedicineFormDialog';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -35,7 +35,6 @@ function TabPanel(props) {
 }
 export default function CalculatePage() {
   const [value, setValue] = useState(0);
-  const dispatch = useDispatch();
   const medicine = useSelector(medicineList);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -58,26 +57,20 @@ export default function CalculatePage() {
                 {medicine.map((category, index) => (
                   <Tab label={category.category} value={index} />
                 ))}
-                <Tab icon={<AddIcon />} iconPosition="start" label="新增種類" />
               </Tabs>
             </Box>
-                      {medicine.map((category, index) => (
-                          <TabPanel value={value} index={index}>
-                          <MedicineList data={category} index={index} />
-                          </TabPanel>))}
+            {medicine.map((category, index) => (
+              <TabPanel value={value} index={index}>
+                <MedicineList data={category} index={index} />
+              </TabPanel>
+            ))}
           </Paper>
         </Grid>
       </Grid>
-      <div style={{ position: 'fixed', bottom: 20, right: 20 }}>
-        <Fab size="medium" color="secondary" aria-label="add">
-          <AddIcon />
-        </Fab>
-      </div>
-      <div style={{ position: 'fixed', bottom: 80, right: 20 }}>
-        <Fab size="medium" color="secondary" aria-label="add">
-          <AddIcon />
-        </Fab>
-      </div>
+      <AddMedicineItem target={value} />
+     
+
     </Container>
+    
   );
 }
