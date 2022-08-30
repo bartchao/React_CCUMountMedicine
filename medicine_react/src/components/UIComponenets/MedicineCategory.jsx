@@ -5,8 +5,12 @@ import {
 import { useDispatch } from 'react-redux';
 import { deleteItem } from 'src/store/modules/medicine/medicineSlice';
 import MedicineItem from './MedicineItem';
+
+
 export default function MedicineCategory({ data, index }) {
   const dispatch = useDispatch();
+
+
   const handleDelete = (uuid) => {
     let item = {
       index: index,

@@ -7,13 +7,17 @@ import {
   Tabs,
   Typography,
   Paper,
+  FormControlLabel,
+  Switch,
 } from '@mui/material/';
 import TeamInfo from '@components/UIComponenets/TeamInfo';
 import MedicineCategory from '@components/UIComponenets/MedicineCategory';
-
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { medicineList } from 'src/store/modules/medicine/medicineSlice';
 import AddMedicineItem from '@components/UIComponenets/AddMedicineFormDialog';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { setShowUsage } from '@store/view/viewSlice';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -35,10 +39,26 @@ function TabPanel(props) {
 }
 export default function CalculatePage() {
   const [value, setValue] = useState(0);
+  const dispatch = useDispatch();
+  const [usageChecked, setUsageChecked] = useState(false);
+  const theme = useTheme();
+  const matchesTouch = useMediaQuery(theme.breakpoints.up('md'));
   const medicine = useSelector(medicineList);
-  const handleChange = (newValue) => {
+  const handleChange = (event,newValue) => {
     setValue(newValue);
   };
+  const handleUsageChecked = () => {
+    let newState = !usageChecked;
+    setUsageChecked(newState);
+    dispatch(setShowUsage(newState));
+  };
+  const Switches = (
+    <FormControlLabel
+      control={<Switch checked={usageChecked} onChange={handleUsageChecked} />}
+      label="顯示用法"
+      sx={{ marginLeft: 'auto' }} />
+  
+  );
   return (
     <Container component="main" maxWidth="xl">
       <Grid container spacing={1}>
@@ -57,7 +77,9 @@ export default function CalculatePage() {
                 {medicine.map((category, index) => (
                   <Tab label={category.category} value={index} />
                 ))}
+                {matchesTouch && Switches}
               </Tabs>
+              {!matchesTouch && Switches}
             </Box>
             {medicine.map((category, index) => (
               <TabPanel value={value} index={index}>
@@ -68,9 +90,6 @@ export default function CalculatePage() {
         </Grid>
       </Grid>
       <AddMedicineItem target={value} />
-     
-
     </Container>
-    
   );
 }

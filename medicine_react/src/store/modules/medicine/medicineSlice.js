@@ -31,7 +31,7 @@ export const infoSlice = createSlice({
         let targetItem = medicineList[category].item.filter(
           (item) => item.uuid === uuid
         );
-        if (targetItem !== undefined) {
+        if (targetItem.length>0) {
           let obj = targetItem[0];
           obj.count = value;
           //console.log(current(medicineList));

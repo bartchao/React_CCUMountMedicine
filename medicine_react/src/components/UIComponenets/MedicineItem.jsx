@@ -12,6 +12,7 @@ import {
   CardContent,
   CardActions,
   Modal,
+  Stack,
 } from '@mui/material';
 import { Delete } from '@mui/icons-material/';
 import Button from '@mui/material/Button';
@@ -21,24 +22,23 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CountDialog from './MobileCountDialog';
 import useReset from 'src/hook/useReset';
-import { useDispatch } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { modifyMedicineItemInCategory } from 'src/store/modules/medicine/medicineSlice';
 const ModalStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-
   bgcolor: 'background.paper',
   boxShadow: 24,
 };
-export default function MedicineItem({ data,handleDelete }) {
-  const { title, subtitle, text, formula, count,uuid } = data;
+export default function MedicineItem({ data, handleDelete }) {
+  const { title, subtitle, text, formula, count, uuid } = data;
   const theme = useTheme();
+  const showUsage = useSelector((state) => state.view.showUsage);
   const dispatch = useDispatch();
   const matchesTouch = useMediaQuery(theme.breakpoints.up('md'));
   const [style, setStyle] = useState({ visibility: 'hidden' });
-
   const [countDialogOpen, setCountDialogOpen] = useState(false);
   const [infoModalOpen, setInfoModalOpen] = useState(false);
   const [newCount, setNewCount] = useState(count);
@@ -62,7 +62,19 @@ export default function MedicineItem({ data,handleDelete }) {
       dispatch(modifyMedicineItemInCategory({ uuid, value }));
     }
   };
-
+  const countColorButton = () => {
+    if (newCount > defaultValue) {
+      return 'success';
+    } else if(newCount < defaultValue) {
+      return 'error';
+    } else {
+      return 'primary';
+    }
+  };
+  const countColorText = () => {
+    let text = countColorButton();
+    return theme.palette[text].main;
+  };
   return (
     <>
       <Grid item lg={6} xs={12}>
@@ -75,40 +87,32 @@ export default function MedicineItem({ data,handleDelete }) {
               setStyle({ visibility: 'hidden' });
             }}
             disablePadding
-            secondaryAction={
-              <Box sx={{ display: 'flex' }}>
-                {matchesTouch && (
-                  <>
-                    <Box sx={style}>
-                      <IconButton onClick={()=>handleDelete(uuid)}>
-                        <Delete />
-                      </IconButton>
-                      <IconButton
-                        onClick={() => handleCountChange(newCount - 1)}
-                      >
-                        <RemoveIcon />
-                      </IconButton>
-                      <IconButton
-                        onClick={() => handleCountChange(newCount + 1)}
-                      >
-                        <AddIcon />
-                      </IconButton>
-                    </Box>
-                    <Button onClick={handleCountDialogOpen}>
-                      <Typography variant="h6">{newCount}</Typography>
-                    </Button>
-                  </>
-                )}
-                {!matchesTouch && (
-                  <Button variant="contained" onClick={handleCountDialogOpen}>
-                    <Typography variant="h6">{newCount}</Typography>
-                  </Button>
-                )}
-              </Box>
-            }
           >
-            <ListItemButton onClick={handleInfoModalOpen}>
-              <ListItemText primary={title} secondary={subtitle} />
+            <ListItemButton >
+              <ListItemText primary={title} secondary={showUsage ? text:subtitle} sx={{ paddingRight:2 }} onClick={handleInfoModalOpen}/>
+              {matchesTouch && (
+                <Stack direction="row" sx={{ minWidth: 200 }}>
+                  <Box sx={style}>
+                    <IconButton onClick={() => handleDelete(uuid)}>
+                      <Delete />
+                    </IconButton>
+                    <IconButton onClick={() => handleCountChange(newCount - 1)}>
+                      <RemoveIcon />
+                    </IconButton>
+                    <IconButton onClick={() => handleCountChange(newCount + 1)}>
+                      <AddIcon />
+                    </IconButton>
+                  </Box>
+                  <Button onClick={handleCountDialogOpen}>
+                    <Typography color={countColorText()} variant="h5"><b>{newCount}</b></Typography>
+                  </Button>
+                </Stack>
+              )}
+              {!matchesTouch && (
+                <Button variant="contained" color={countColorButton()} onClick={handleCountDialogOpen}>
+                  <Typography variant="h6">{newCount}</Typography>
+                </Button>
+              )}
             </ListItemButton>
           </ListItem>
         </Paper>
@@ -117,7 +121,7 @@ export default function MedicineItem({ data,handleDelete }) {
           open={countDialogOpen}
           onClose={handleCountDialogClose}
           onCountChange={handleCountChange}
-          handleReset={()=> handleCountChange(defaultValue)}
+          handleReset={() => handleCountChange(defaultValue)}
         />
       </Grid>
       <Modal
@@ -129,14 +133,18 @@ export default function MedicineItem({ data,handleDelete }) {
         <Box sx={{ ...ModalStyle }}>
           <Card sx={{ minWidth: 400 }}>
             <CardContent>
-              <Typography variant="h5" color="text.primary" >
+              <Typography variant="h5" color="text.primary">
                 {title}
               </Typography>
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
                 {subtitle}
               </Typography>
-              <Typography variant="body1" gutterBottom>{text}</Typography>
-              <Typography variant="overline">公式:{formula.replace('days', '天數').replace('person', '人數')}</Typography>
+              <Typography variant="body1" gutterBottom>
+                {text}
+              </Typography>
+              <Typography variant="overline">
+                公式:{formula.replace('days', '天數').replace('person', '人數')}
+              </Typography>
             </CardContent>
             <CardActions>
               <Button size="small">Learn More</Button>
