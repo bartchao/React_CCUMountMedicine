@@ -9,7 +9,7 @@ import {
   Paper,
 } from '@mui/material/';
 import TeamInfo from '@components/UIComponenets/TeamInfo';
-import MedicineList from '@components/UIComponenets/MedicineList';
+import MedicineCategory from '@components/UIComponenets/MedicineCategory';
 
 import { useSelector } from 'react-redux';
 import { medicineList } from 'src/store/modules/medicine/medicineSlice';
@@ -61,7 +61,7 @@ export default function CalculatePage() {
             </Box>
             {medicine.map((category, index) => (
               <TabPanel value={value} index={index}>
-                <MedicineList data={category} index={index} />
+                <MedicineCategory data={category} index={index} />
               </TabPanel>
             ))}
           </Paper>
