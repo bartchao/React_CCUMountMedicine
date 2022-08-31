@@ -1,7 +1,7 @@
 import { CssBaseline,Typography,Container, Box, Grid, TextField,FormControlLabel,Button,Checkbox,Link } from '@mui/material';
 import { useRef} from 'react';
 import { useDispatch } from 'react-redux';
-import { setTeamData } from '@store/info/infoSlice';
+import { initTeamState } from '@store/info/infoSlice';
 import { useNavigate } from 'react-router-dom';
 function LandingPage() {    
   const dispatch = useDispatch();
@@ -16,8 +16,7 @@ function LandingPage() {
     let teamDays = teamDaysRef.current.value;
     let teamAttitude = teamAttitudeRef.current.value;
     let payload = { teamName, teamPerson, teamDays, teamAttitude };
-    console.log(payload)
-    dispatch(setTeamData(payload));
+    dispatch(initTeamState(payload));
     navigate('/calc');
   }
   return (

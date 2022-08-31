@@ -1,5 +1,4 @@
 import {
-  Box,
   AppBar,
   Toolbar,
   IconButton,
@@ -26,6 +25,7 @@ const Main = styled('main')(({ theme }) => ({
   }),
 }));
 export default function MainLayout({ children }) {
+
   return (
     <>
       <AppBarStyled sx={{ display:'flex' }}>

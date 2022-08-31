@@ -21,7 +21,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CountDialog from './MobileCountDialog';
-import useReset from 'src/hook/useReset';
+import { useReset } from 'src/hook/hooks';
 import { useSelector,useDispatch } from 'react-redux';
 import { modifyMedicineItemInCategory } from 'src/store/modules/medicine/medicineSlice';
 const ModalStyle = {

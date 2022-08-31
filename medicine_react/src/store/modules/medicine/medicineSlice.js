@@ -1,8 +1,8 @@
-import { createSlice,current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import DefaultPreset from 'src/common/medicine.json';
 import { v4 as uuidv4 } from 'uuid';
+import { cloneDeep } from 'lodash';
 const initialState = {
-  medicineList: CalculateAll(2, 8),
 };
 
 export const infoSlice = createSlice({
@@ -11,7 +11,7 @@ export const infoSlice = createSlice({
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     setMedicineList: (state, action) => {
-      state.medicineList = CalculateAll(state.teamDays, state.teamPerson);
+      state.medicineList = action.payload.medicineList;
     },
     deleteMedicineItem: (state, action) => {
       let { index, payload } = action.payload;
@@ -93,3 +93,16 @@ export const addMedicineItem = (payload) => (dispatch, getState) => {
   dispatch(addMedicineItemInCategory(payload));
 };
 
+export const calculateMedicineList = () => (dispatch, getState) => {
+  let { teamDays, teamPerson, teamAttitude } = getState().teamInfo;
+  let medicine = cloneDeep(DefaultPreset.medicine);
+  medicine = medicine.filter(category => category.attitude < teamAttitude);
+  medicine.map((category, index) => {
+      let items = category.item;
+      items.map((item) => {
+        item.uuid = uuidv4();
+        item.count = Calculate(teamDays,teamPerson,item.formula);
+    });
+  });
+  dispatch(setMedicineList({medicineList:medicine}));
+}

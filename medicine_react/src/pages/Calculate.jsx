@@ -18,6 +18,8 @@ import AddMedicineItem from '@components/UIComponenets/AddMedicineFormDialog';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { setShowUsage } from '@store/view/viewSlice';
+import { useCheck } from 'src/hook/hooks';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -43,6 +45,7 @@ export default function CalculatePage() {
   const [usageChecked, setUsageChecked] = useState(false);
   const theme = useTheme();
   const matchesTouch = useMediaQuery(theme.breakpoints.up('md'));
+    useCheck();
   const medicine = useSelector(medicineList);
   const handleChange = (event,newValue) => {
     setValue(newValue);
@@ -74,14 +77,14 @@ export default function CalculatePage() {
                 variant="scrollable"
                 scrollButtons="auto"
               >
-                {medicine.map((category, index) => (
+                {medicine && medicine.map((category, index) => (
                   <Tab label={category.category} value={index} />
                 ))}
                 {matchesTouch && Switches}
               </Tabs>
               {!matchesTouch && Switches}
             </Box>
-            {medicine.map((category, index) => (
+            {medicine && medicine.map((category, index) => (
               <TabPanel value={value} index={index}>
                 <MedicineCategory data={category} index={index} />
               </TabPanel>
@@ -89,7 +92,7 @@ export default function CalculatePage() {
           </Paper>
         </Grid>
       </Grid>
-      <AddMedicineItem target={value} />
+      {medicine && <AddMedicineItem target={value} />}
     </Container>
   );
 }

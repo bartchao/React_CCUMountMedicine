@@ -21,8 +21,7 @@ const MainRoutes = {
     },
     {
       path: '',
-      element: <LandingPage />
-      
+      element: <LandingPage />   
     }/*
     {
       path: 'dashboard',
