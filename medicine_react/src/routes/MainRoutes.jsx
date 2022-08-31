@@ -6,7 +6,7 @@ import MainLayout from 'src/layout/MainLayout/index';
 import LandingPage from 'src/pages/Landing';
 // import BreadcrumbLayout from '@layout/BreadcrumbLayout/';
 const CalculatePage = Loadable(lazy(() => import('@pages/Calculate')));
-
+const PrintPage = Loadable(lazy(() => import('@pages/Print')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -15,13 +15,17 @@ const MainRoutes = {
   ),
   children: [
     {
-      path: '/calc',
+      path: '/calculate',
       element: <CalculatePage />,
       breadcrumb: 'navigation.calc',
     },
     {
       path: '',
       element: <LandingPage />   
+    },
+    {
+      path: '/print',
+      element:<PrintPage/>
     }/*
     {
       path: 'dashboard',

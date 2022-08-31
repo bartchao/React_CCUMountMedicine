@@ -17,7 +17,7 @@ function LandingPage() {
     let teamAttitude = teamAttitudeRef.current.value;
     let payload = { teamName, teamPerson, teamDays, teamAttitude };
     dispatch(initTeamState(payload));
-    navigate('/calc');
+    navigate('/calculate');
   }
   return (
     

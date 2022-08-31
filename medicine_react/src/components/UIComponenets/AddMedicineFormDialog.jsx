@@ -11,7 +11,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useSelector,useDispatch } from 'react-redux';
 import { addMedicineItem,medicineList } from 'src/store/modules/medicine/medicineSlice';
 
-export default function AddMedicineItem({ target }) {
+export default function AddMedicineItem({ target,sx }) {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const medicine = useSelector(medicineList);
@@ -42,7 +42,7 @@ export default function AddMedicineItem({ target }) {
 
   return (
     <>
-      <div style={{ position: 'fixed', bottom: 20, right: 20 }}>
+      <div style={sx}>
         <Fab
           size="medium"
           color="secondary"
